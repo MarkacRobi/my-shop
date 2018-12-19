@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     /**
-     * Blokira pot ce nisi prijavljen
+     * Blokira ce nisi prijavljen
      *
      * @return void
      */

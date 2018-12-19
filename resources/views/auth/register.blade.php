@@ -26,6 +26,34 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Surname') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ old('surname') }}" required autofocus>
+
+                                @if ($errors->has('surname'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('surname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="number" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required autofocus>
+
+                                @if ($errors->has('phone'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
@@ -58,6 +86,15 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('User type') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="role" type="radio" name="role" value="STRANKA" checked> Stranka<br>
+                                <input id="role" type="radio" name="role" value="PRODAJALEC" checked>Prodajalec<br>
                             </div>
                         </div>
 
