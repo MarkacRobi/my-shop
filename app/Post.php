@@ -12,4 +12,8 @@ class Post extends Model
     protected $primaryKey = 'id';
 
     public $timestamps = true;
+    //pomeni, da ima post relacijo z userjem in pripada enemu uporabniku
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }
