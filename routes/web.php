@@ -20,6 +20,8 @@ Route::get('/services', 'PagesController@services');
 
 Route::resource('posts', 'PostsController');
 
+Route::resource('users', 'UsersController');
+
 //Route::get('/users/{id}/{name}', function ($id, $name) {
 //    return 'This is users '.$name . ' with id = '.$id;
 //});

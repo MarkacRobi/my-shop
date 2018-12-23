@@ -93,7 +93,9 @@
                             <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('User type') }}</label>
 
                             <div class="col-md-6">
-                                <input id="role" type="radio" name="role" value="STRANKA" checked> Stranka<br>
+                                @guest
+                                    <input id="role" type="radio" name="role" value="STRANKA"> Stranka<br>
+                                @endguest
                                 <input id="role" type="radio" name="role" value="PRODAJALEC" checked>Prodajalec<br>
                             </div>
                         </div>

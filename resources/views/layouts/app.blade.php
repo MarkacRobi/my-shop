@@ -22,7 +22,7 @@
 <body>
     <div id="app">
      @include('inc.navbar')
-        <div class="container">
+        <div class="container h-100">
             @include('inc.messages')
             @yield('content')
         </div>

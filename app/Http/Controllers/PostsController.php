@@ -25,7 +25,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+//        $posts = Post::all();
 //        $posts = Post::orderBy('title', 'desc')->get();
 //        return Post::where('title', 'Post Two')->get();
 //        $posts = DB::select('select * from posts');
@@ -114,7 +114,7 @@ class PostsController extends Controller
             'body' => 'required'
         ]);
 
-        //Create Post
+        //Update User
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');

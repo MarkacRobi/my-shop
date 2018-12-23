@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+<nav class="navbar navbar-expand-md navbar-light navbar-laravel mb-2">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
@@ -40,7 +40,8 @@
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
-                @else
+                @endguest
+                @auth
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
@@ -53,13 +54,14 @@
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
+                            <a class="dropdown-item" href="/users/{{Auth::user()->id}}/edit">Edit profile</a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                         </div>
                     </li>
-                @endguest
+                @endauth
             </ul>
         </div>
     </div>
