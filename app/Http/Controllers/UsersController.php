@@ -74,7 +74,16 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        $currentUser = auth()->user();
+        //preveri ce je admin, ki ureja prodajalca ali ureja svoj profil
+        if(($currentUser->role == 'ADMIN' && $user->role == 'PRODAJALEC') || $currentUser->id === $user->id){
+            return view('users.show')->with('user', $user);
+        }
+        else {
+            return redirect('/')->with('error', 'Unauthorized Page');
+        }
+
     }
 
     /**

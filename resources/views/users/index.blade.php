@@ -13,8 +13,10 @@
     @if (count($users) > 0)
         @foreach($users as $user)
             <div class="container">
-                <h3 class="{{$user->active == '0' ? 'list-group-item text-light bg-gradient-danger' : 'list-group-item bg-gradient-success'}}">
-                    <a href="/users/{{$user->id}}" class="text-white">{{$user->name}} {{$user->surname}}</a>
+                <h3 class="list-group-item">
+                    <a href="/users/{{$user->id}}" class="{{$user->active == '0' ? 'text-danger' : 'text-success'}}">
+                        {{$user->name}} {{$user->surname}} {{$user->active == '0' ? '(Deaktiviran račun)' : ''}}
+                    </a>
                     {!! Form::open(['action' => ['UsersController@destroy', $user->id], 'method' => 'POST', 'class' => 'float-right'])!!}
                     {{Form::hidden('_method', 'DELETE')}}
                     {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
