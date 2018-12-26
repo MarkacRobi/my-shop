@@ -6,7 +6,7 @@
         @foreach($posts as $post)
             <div class="container">
                 <h3 class="list-group-item">
-                    <a href="/posts/{{$post->id}}">{{$post->title}}</a>
+                    <a href="{{url('/posts/'.$post->id)}}">{{$post->title}}</a>
                 </h3>
                 <small>Written on {{$post->created_at}} by {{$post->user->name}}</small>
             </div>

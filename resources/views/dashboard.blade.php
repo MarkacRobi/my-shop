@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <a href="/posts/create" class="btn btn-primary">Create Post</a>
+                    <a href="{{route('posts.create')}}" class="btn btn-primary">Create Post</a>
                     <h3>Your blog Posts</h3>
                     @if (count($posts) > 0)
                             <table class="table table-striped">
@@ -25,7 +25,7 @@
                             @foreach ($posts as $post)
                                 <tr>
                                     <td>{{$post->title}}</td>
-                                    <td><a href="/posts/{{$post->id}}/edit" class="btn btn-outline-dark">Edit</a> </td>
+                                    <td><a href="{{route('posts.edit',$post->id)}}" class="btn btn-outline-dark">Edit</a> </td>
                                     <td>
                                     {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right'])!!}
                                     {{Form::hidden('_method', 'DELETE')}}

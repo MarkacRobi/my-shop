@@ -7,23 +7,23 @@
         <h1>
             Prodajalci
             {{--<a href="/users/create" class="btn btn-outline-primary float-right">Kreiraj novega</a>--}}
-            <a href="/users/create" role="button" class="btn btn-success btn-lg">Kreiraj novega</a>
+            <a href="{{route('users.create')}}" role="button" class="btn btn-success btn-lg">Kreiraj novega</a>
         </h1>
     </div>
     @if (count($users) > 0)
         @foreach($users as $user)
             <div class="container">
                 <h3 class="list-group-item">
-                    <a href="/users/{{$user->id}}" class="{{$user->active == '0' ? 'text-danger' : 'text-success'}}">
+                    <a href="{{url('/users/'.$user->id)}}" class="{{$user->active == '0' ? 'text-danger' : 'text-success'}}">
                         {{$user->name}} {{$user->surname}} {{$user->active == '0' ? '(Deaktiviran račun)' : ''}}
                     </a>
                     {!! Form::open(['action' => ['UsersController@destroy', $user->id], 'method' => 'POST', 'class' => 'float-right'])!!}
                     {{Form::hidden('_method', 'DELETE')}}
                     {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
                     {!! Form::close() !!}
-                    <a href="/users/{{$user->id}}/edit" class="btn btn-primary float-right">Edit</a>
+                    <a href="{{route('users.edit',$user->id)}}" class="btn btn-primary float-right">Edit</a>
                     @if ($user->active === 1)
-                        <form method="POST" action="/users/{{$user->id}}" class="float-right">
+                        <form method="POST" action="{{url('/users/'.$user->id)}}" class="float-right">
                             @csrf
                             <input id="active" type="number"  name="active" value="0" hidden>
                             {{--"spoofing" spremeni POST v PUT!--}}
@@ -33,7 +33,7 @@
                             </button>
                         </form>
                     @else
-                        <form method="POST" action="/users/{{$user->id}}" class="float-right">
+                        <form method="POST" action="{{url('/users/'.$user->id)}}" class="float-right">
                             @csrf
                             <input id="active" type="number"  name="active" value="1" hidden>
                             {{--"spoofing" spremeni POST v PUT!--}}

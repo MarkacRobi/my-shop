@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Edit profile') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="/users/{{$user->id}}">
+                        <form method="POST" action="{{url('/users/'.$user->id)}}">
                             @csrf
 
                             <div class="form-group row">
@@ -96,7 +96,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Confirm') }}
                                     </button>
-                                    <a href="/dashboard" class="btn btn-danger">Cancel</a>
+                                    <a href="{{url('/dashboard')}}" class="btn btn-danger">Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -106,7 +106,8 @@
         </div>
         <div class="row justify-content-center">
             <span class="h3 text-danger">Trajno izbrisanje računa! </span>
-            {!! Form::open(['action' => ['UsersController@destroy', $user->id], 'method' => 'POST', 'class' => 'float-right'])!!}
+            {!! Form::open(['action' => ['UsersController@destroy', $user->id], 'method' => 'POST', 'class' => 'float-right'
+            , 'onclick' => "return confirm('Are you sure you want to Remove?');"])!!}
             {{Form::hidden('_method', 'DELETE')}}
             {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
             {!! Form::close() !!}

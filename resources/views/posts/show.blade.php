@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="/posts" class="btn btn-default">Go Back</a>
+    <a href="{{url('/posts')}}" class="btn btn-default">Go Back</a>
     <h1>{{$post->title}}</h1>
     <div>
         {{$post->body}}
@@ -13,7 +13,7 @@
     @auth
         {{--ce je trenutni prijavljen uporabnik enak tistemu ki je kreiral, lahko ureja--}}
         @if(Auth::user()->id == $post->user_id)
-            <a href="/posts/{{$post->id}}/edit" class="btn btn-default">Edit</a>
+            <a href="{{route('posts.edit', $post->id)}}" class="btn btn-default">Edit</a>
 
             {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right'])!!}
                 {{Form::hidden('_method', 'DELETE')}}

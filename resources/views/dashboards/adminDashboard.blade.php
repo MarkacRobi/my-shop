@@ -7,7 +7,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="sm col-md-4 m-0 p-0" style="height: 200px;">
-            <a href="/users">
+            <a href="{{ route('users.index') }}">
                 <button type="button" class="btn btn-outline-info w-100 h-100" >
                     <h1>
                         Urejanje podajalcev
@@ -16,7 +16,7 @@
             </a>
         </div>
         <div class="sm col-md-4 m-0 p-0" style="height: 200px;">
-            <a href="/users">
+            <a href="{{route('users.index')}}">
                 <button type="button" class="btn btn-outline-dark w-100 h-100" >
                     <h1>
                         Urejanje profila
