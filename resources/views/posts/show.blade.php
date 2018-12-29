@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="{{url('/posts')}}" class="btn btn-default">Go Back</a>
+    <a href="{{ url()->previous() }}" class="btn btn-default">Go Back</a>
     <h1>{{$post->title}}</h1>
+    <img width="50%" src="{{ asset('/storage/cover_images/'.$post->cover_image) }}">
+    <br><br>
     <div>
         {{$post->body}}
     </div>

@@ -26,12 +26,21 @@ class DashboardController extends Controller
     {
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
-        if($user->role !== 'ADMIN'){
-            return view('dashboard')->with('posts', $user->posts);
+        if($user->role == 'ADMIN'){
+            return view('dashboards.adminDashboard');
+        }
+        else if($user->role == 'PRODAJALEC') {
+            return view('dashboards.prodajalecDashboard');
         }
         else {
-            return view('dashboards.adminDashboard');
+            return view('dashboard')->with('posts', $user->posts);
 //            return redirect('/users');
         }
+    }
+
+    public function dashboard(){
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        return view('dashboards.postsdDashboard')->with('posts', $user->posts);
     }
 }

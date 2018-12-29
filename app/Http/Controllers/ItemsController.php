@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
+
+use App\Item;
 use App\User;
 use DB;
 
-class PostsController extends Controller
+class ItemsController extends Controller
 {
     /**
      * Blokira pot ce nisi prijavljen
@@ -18,8 +19,6 @@ class PostsController extends Controller
     {
         $this->middleware('auth')->except(['index','show']);
     }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -27,15 +26,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-//        $posts = Post::all();
-//        $posts = Post::orderBy('title', 'desc')->get();
-//        return Post::where('title', 'Post Two')->get();
-//        $posts = DB::select('select * from posts');
-
-//        $posts = Post::all();
-        //pagination
-        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
-        return view('posts.index')->with('posts', $posts);
+        $items = Item::where('active', '1')->orderBy('created_at', 'desc')->paginate(12);
+        return view('items.index')->with('items', $items);
     }
 
     /**
@@ -45,7 +37,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('items.create');
     }
 
     /**
@@ -60,38 +52,40 @@ class PostsController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
+            'price' => ['required','numeric'],
             'cover_image' => 'image|nullable|max:1999'
         ]);
 
         // Handle file upload
-        if($request->hasFile('cover_image')){
+        if($request->hasFile('item_image')){
             //Get filename with the extension
-            $filenamewithExt = $request->file('cover_image')->getClientOriginalName();
+            $filenamewithExt = $request->file('item_image')->getClientOriginalName();
 
             //Get just filename
             $filename = pathinfo($filenamewithExt,PATHINFO_FILENAME);
 
             //Get just ext
-            $extension = $request->file('cover_image')->guessClientExtension();
+            $extension = $request->file('item_image')->guessClientExtension();
 
             //FileName to store
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
 
             //Upload Image   !!! mores naret php artisan storage:link da imas dostop do storage v public
-            $path = $request->file('cover_image')->storeAs('public/cover_images',$fileNameToStore);
+            $path = $request->file('item_image')->storeAs('public/item_images',$fileNameToStore);
         }
         else {
             $fileNameToStore = 'noimage.jpg';
         }
 
-        //Create Post
-        $post = new Post;
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
-        $post->user_id = auth()->user()->id;
-        $post->cover_image = $fileNameToStore;
-        $post->save();
-        return redirect('/posts') -> with('success', 'Post Created');
+        //Create Item
+        $item = new Item;
+        $item->title = $request->input('title');
+        $item->body = $request->input('body');
+        $item->price = $request->input('price');
+        $item->user_id = auth()->user()->id;
+        $item->item_image = $fileNameToStore;
+        $item->save();
+        return redirect('/') -> with('success', 'Item Created');
     }
 
     /**
@@ -102,8 +96,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
-        return view('posts.show')->with('post', $post);
+        $item = Item::find($id);
+        return view('items.show')->with('item', $item);
     }
 
     /**
@@ -114,14 +108,7 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
-
-        //preveri za pravilnega uporabnika
-        if(auth()->user()->id !== $post->user_id){
-            return redirect('/posts')->with('error', 'Unauthorized Page');
-        }
-
-        return view('posts.edit')->with('post', $post);
+        //
     }
 
     /**
@@ -133,18 +120,7 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //validacija
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required'
-        ]);
-
-        //Update User
-        $post = Post::find($id);
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
-        $post->save();
-        return redirect('/posts') -> with('success', 'Post Updated');
+        //
     }
 
     /**
@@ -155,14 +131,6 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-
-        //preveri za pravilnega uporabnika
-        if(auth()->user()->id !== $post->user_id){
-            return redirect('/posts')->with('error', 'Unauthorized Page');
-        }
-
-        $post->delete();
-        return redirect('/posts')->with('success', 'Post Removed');
+        //
     }
 }

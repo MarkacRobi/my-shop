@@ -22,8 +22,16 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $users =User::where('role', 'PRODAJALEC')->orderBy('name', 'asc')->paginate(10);
-        return view('users.index')->with('users', $users);
+        $currentUser = auth()->user();
+        if($currentUser->role == 'ADMIN') {
+            $users = User::where('role', 'PRODAJALEC')->orderBy('name', 'asc')->paginate(10);
+            return view('users.index')->with('users', $users);
+        }
+        else if($currentUser->role == 'PRODAJALEC') {
+            $users = User::where('role', 'STRANKA')->orderBy('name', 'asc')->paginate(10);
+            return view('users.index')->with('users', $users);
+        }
+        else redirect('/dashboard');
     }
 
     /**
@@ -80,6 +88,10 @@ class UsersController extends Controller
         if(($currentUser->role == 'ADMIN' && $user->role == 'PRODAJALEC') || $currentUser->id === $user->id){
             return view('users.show')->with('user', $user);
         }
+        //preveri ce je prodajalec, ki ureja stranko ali ureja svoj profil
+        else if(($currentUser->role == 'PRODAJALEC' && $user->role == 'STRANKA') || $currentUser->id === $user->id) {
+            return view('users.show')->with('user', $user);
+        }
         else {
             return redirect('/')->with('error', 'Unauthorized Page');
         }
@@ -100,6 +112,9 @@ class UsersController extends Controller
         if(($currentUser->role == 'ADMIN' && $user->role == 'PRODAJALEC') || $currentUser->id === $user->id){
             return view('users.edit')->with('user', $user);
         }
+        else if(($currentUser->role == 'PRODAJALEC' && $user->role == 'STRANKA') || $currentUser->id === $user->id){
+            return view('users.edit')->with('user', $user);
+        }
         else {
             return redirect('/')->with('error', 'Unauthorized Page');
         }
@@ -118,8 +133,8 @@ class UsersController extends Controller
         $currentUser = auth()->user();
         //preveri ce je activate/disable accounta
         if($request->has('active')) {
-            //preveri ce admin spreminja prodajalca
-            if($currentUser->role == 'ADMIN' && $user->role == 'PRODAJALEC') {
+            //preveri ce admin spreminja prodajalca ali prodajalec stranko
+            if(($currentUser->role == 'ADMIN' && $user->role == 'PRODAJALEC') || ($currentUser->role == 'PRODAJALEC' && $user->role == 'STRANKA')) {
                 //validiraj da je 0 al 1
                 $this->validate($request, [
                     'active' => ['required', 'boolean'],

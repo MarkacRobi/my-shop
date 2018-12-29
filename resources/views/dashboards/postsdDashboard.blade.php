@@ -24,7 +24,7 @@
                             </tr>
                             @foreach ($posts as $post)
                                 <tr>
-                                    <td>{{$post->title}}</td>
+                                    <td><a href="{{route('posts.show',$post->id)}}">{{$post->title}}</a></td>
                                     <td><a href="{{route('posts.edit',$post->id)}}" class="btn btn-outline-dark">Edit</a> </td>
                                     <td>
                                     {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right'])!!}

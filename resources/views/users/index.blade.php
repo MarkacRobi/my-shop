@@ -2,7 +2,7 @@
 
 @section('content')
 @auth
-@if(Auth::user()->role == 'ADMIN')
+@if(in_array(Auth::user()->role, ['ADMIN','PRODAJALEC']) )
     <div class="container mt-3">
         <h1>
             Prodajalci

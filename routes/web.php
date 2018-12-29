@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', 'PagesController@index');
+Route::get('/', 'ItemsController@index');
 
 Route::get('/about', 'PagesController@about');
 
@@ -22,9 +22,13 @@ Route::get('/services', 'PagesController@services');
 
 Route::resource('posts', 'PostsController');
 
+Route::resource('items', 'ItemsController');
+
 Route::resource('users', 'UsersController');
 
 Route::get('/dashboard', 'DashboardController@index');
+
+Route::get('/dashboard/posts', 'DashboardController@dashboard');
 
 Route::group(['middleware' => 'forceSSL'], function(){
 

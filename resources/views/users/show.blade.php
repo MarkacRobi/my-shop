@@ -2,9 +2,9 @@
 
 @section('content')
     @if (Auth::user()->role == 'ADMIN')
-        <a href="{{url('/users')}}" class="btn btn-default">Go Back</a>
+        <a href="{{ url()->previous() }}" class="btn btn-default">Go Back</a>
     @else
-        <a href="{{url('/dashboard')}}" class="btn btn-default">Go Back</a>
+        <a href="{{ url()->previous() }}" class="btn btn-default">Go Back</a>
     @endif
 
     <h1>Profile</h1>

@@ -31,4 +31,9 @@ class User extends Authenticatable
     public function posts() {
         return $this->hasMany('App\Post');
     }
+
+    //relacija, ki pomeni da ima user vec artiklov/item-ov
+    public function items() {
+        return $this->hasMany('App\Item');
+    }
 }
