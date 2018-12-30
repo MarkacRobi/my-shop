@@ -4,12 +4,15 @@
     <div class="container">
         <section class="jumbotron text-center">
             <div class="container">
-                <h1 class="jumbotron-heading">Album example</h1>
-                <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-                <p>
-                    <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-                </p>
+                <h1 class="jumbotron-heading">My Shop</h1>
+                <p class="lead text-muted">This is best shop ever!.</p>
+                @auth
+                    @if (Auth::user()->role == 'PRODAJALEC')
+                        <p>
+                            <a href="{{url('/items/create')}}" class="btn btn-primary my-2">Create item</a>
+                        </p>
+                    @endif
+                @endauth
             </div>
         </section>
         <h3 class="h3">shopping Demo-1 </h3>
@@ -25,7 +28,7 @@
                                 </a>
                                 <ul class="social">
                                     <li><a href="{{url('/items/'.$item->id)}}" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a href="{{ route('item.addToCart', $item->id) }}" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <ul class="rating mt-0 mb-2">
@@ -42,7 +45,7 @@
                                 <div class="price">
                                     {{$item->price}}
                                 </div>
-                                <a class="add-to-cart" href="">+ Add To Cart</a>
+                                <a class="add-to-cart" href="{{ route('item.addToCart', $item->id) }}">+ Add To Cart</a>
                             </div>
                         </div>
                     </div>

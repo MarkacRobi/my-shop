@@ -3,10 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use User;
-use Illuminate\Support\Facades\Auth;
 
-class isGuestOrAdmin
+class ProdajalecMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,15 +15,12 @@ class isGuestOrAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::guest())
-        {
+        if ($request->user() && $request->user()->role == 'PRODAJALEC') {
             return $next($request);
         }
-        $user = Auth::user();
-        if($user->role == 'ADMIN'){
-            return $next($request);
+        else {
+            return redirect('/')->with('error', 'Unauthorized');
         }
 
-        return redirect('/')->with('error', 'unauthorized');
     }
 }

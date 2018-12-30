@@ -6,21 +6,21 @@
     <img width="50%" src="{{ asset('/storage/item_images/'.$item->item_image) }}">
     <br><br>
     <div>
-        {{$item->body}}
+        <span class="font-weight-bold">Description</span>
+        <p class="body">{{$item->body}}</p>
     </div>
     <hr>
-    <small>Price: {{$item->price}}</small>
+    <div class="font-weight-bold">Price: {{$item->price}}</div>
     <hr>
-    {{--ce je prijavljen, lahko vidi to--}}
-    {{--@auth--}}
-        {{--ce je trenutni prijavljen uporabnik enak tistemu ki je kreiral, lahko ureja--}}
-        {{--@if(Auth::user()->id == $item->user_id)--}}
-            {{--<a href="{{route('posts.edit', $post->id)}}" class="btn btn-default">Edit</a>--}}
+    @auth
+        @if(Auth::user()->role == 'PRODAJALEC')
+            <a href="{{route('items.edit', $item->id)}}" class="btn btn-default">Edit</a>
 
-            {{--{!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right'])!!}--}}
-            {{--{{Form::hidden('_method', 'DELETE')}}--}}
-            {{--{{Form::submit('Delete', ['class' => 'btn btn-danger'])}}--}}
-            {{--{!! Form::close() !!}--}}
-        {{--@endif--}}
-    {{--@endauth--}}
+            {!! Form::open(['action' => ['ItemsController@destroy', $item->id], 'method' => 'POST', 'class' => 'float-right',
+            'onclick' => "return confirm('Are you sure you want to Remove?');"])!!}
+            {{Form::hidden('_method', 'DELETE')}}
+            {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+            {!! Form::close() !!}
+        @endif
+    @endauth
 @endsection

@@ -19,6 +19,22 @@ Route::get('/about', 'PagesController@about');
 
 Route::get('/services', 'PagesController@services');
 
+//Shopping Cart
+Route::get('/add-to-cart/{id}', [
+    'uses' => 'CartController@getAddToCart',
+    'as' => 'item.addToCart'
+]);
+
+Route::get('/shopping-cart', [
+    'uses' => 'CartController@getCart',
+    'as' => 'item.shoppingCart'
+]);
+//Receipt
+Route::get('/shopping-cart/receipt', [
+    'uses' => 'CartController@getReceipt',
+    'as' => 'item.shoppingCart.receipt'
+]);
+//
 
 Route::resource('posts', 'PostsController');
 
@@ -30,12 +46,13 @@ Route::get('/dashboard', 'DashboardController@index');
 
 Route::get('/dashboard/posts', 'DashboardController@dashboard');
 
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
 Route::group(['middleware' => 'forceSSL'], function(){
 
     // Authentication Routes...
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::post('login', 'Auth\LoginController@login');
-    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
     // Registration Routes...
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');

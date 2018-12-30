@@ -96,7 +96,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Confirm') }}
                                     </button>
-                                    <a href="{{url('/dashboard')}}" class="btn btn-danger">Cancel</a>
+                                    <a href="{{ url()->previous() }}" class="btn btn-danger">Cancel</a>
                                 </div>
                             </div>
                         </form>
