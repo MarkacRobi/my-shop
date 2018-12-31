@@ -28,7 +28,11 @@
                                 </a>
                                 <ul class="social">
                                     <li><a href="{{url('/items/'.$item->id)}}" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="{{ route('item.addToCart', $item->id) }}" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                                    @auth
+                                        @if(Auth::user()->role == 'STRANKA')
+                                        <li><a href="{{ route('item.addToCart', $item->id) }}" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                                        @endif
+                                    @endauth
                                 </ul>
                             </div>
                             <ul class="rating mt-0 mb-2">
@@ -45,7 +49,11 @@
                                 <div class="price">
                                     {{$item->price}}
                                 </div>
-                                <a class="add-to-cart" href="{{ route('item.addToCart', $item->id) }}">+ Add To Cart</a>
+                                @auth
+                                    @if(Auth::user()->role == 'STRANKA')
+                                    <a class="add-to-cart" href="{{ route('item.addToCart', $item->id) }}">+ Add To Cart</a>
+                                    @endif
+                                @endauth
                             </div>
                         </div>
                     </div>

@@ -5,7 +5,7 @@
         <div class="card-header bg-dark text-light">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             Shopping cart
-            <a href="" class="btn btn-outline-info btn-sm float-right">Continue shopping</a>
+            <a href="{{url('/')}}" class="btn btn-outline-info btn-sm float-right">Continue shopping</a>
             <div class="clearfix"></div>
         </div>
         @if (Session::has('cart'))
@@ -25,16 +25,22 @@
                             </div>
                             <div class="col-4 col-sm-4 col-md-4">
                                 <div class="quantity">
-                                    <input type="button" value="+" class="plus">
-                                    <input type="number" step="1" max="99" min="1" value="{{$item['quantity']}}" title="Qty" class="qty"
+                                    <a href="{{ url('/add-to-cart/'.$item['item']->id) }}">
+                                        <input type="button" value="+" class="plus">
+                                    </a>
+                                    <input type="text" value="{{$item['quantity']}}" title="Qty" class="qty"
                                            size="4">
-                                    <input type="button" value="-" class="minus">
+                                    <a href="{{ url('/remove-from-cart/'.$item['item']->id) }}">
+                                        <input type="button" value="-" class="minus">
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-2 col-sm-2 col-md-2 text-right">
-                                <button type="button" class="btn btn-outline-danger btn-xs">
-                                    <a><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </button>
+                                <a href="{{ url('/remove-all-by-id-from-cart/'.$item['item']->id) }}">
+                                    <button type="button" class="btn btn-outline-danger btn-xs">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>

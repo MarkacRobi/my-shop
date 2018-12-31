@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Http\Middleware\StrankaMiddleware;
 use Illuminate\Http\Request;
 use App\Item;
 use DB;
@@ -11,6 +12,12 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(StrankaMiddleware::class);
+    }
+
     public function getAddToCart(Request $request, $id) {
         $item = Item::find($id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
@@ -18,8 +25,30 @@ class CartController extends Controller
         $cart->add($item, $item->id);
 
         $request->session()->put('cart', $cart);
-
+        if(strpos(url()->previous(), 'shopping-cart') !== false){
+            return redirect('/shopping-cart') -> with('success', 'Item '.$item->title.' added to cart');
+        }
         return redirect('/') -> with('success', 'Item '.$item->title.' added to cart');
+    }
+
+    public function getRemoveFromCart(Request $request, $id) {
+        $item = Item::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->remove($item, $item->id);
+
+        $request->session()->put('cart', $cart);
+        return redirect('/shopping-cart') -> with('success', 'Item '.$item->title.' removed from cart');
+    }
+
+    public function getRemoveAllByIdFromCart(Request $request, $id) {
+        $item = Item::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->removeAllById($item, $item->id);
+
+        $request->session()->put('cart', $cart);
+        return redirect('/shopping-cart') -> with('success', 'Item '.$item->title.' removed from cart');
     }
 
     public function getCart() {
@@ -36,6 +65,7 @@ class CartController extends Controller
             return view('/')->with('error', 'Napaka pri pridobitvi seje košarice za pripravo računa');
         }
         $cart = Session::get('cart');
-        return view('shop.receipt')->with('items', $cart->items)->with('totalPrice', $cart->totalPrice);
+        $user = auth()->user();
+        return view('shop.receipt')->with('items', $cart->items)->with('totalPrice', $cart->totalPrice)->with('user',$user);
     }
 }

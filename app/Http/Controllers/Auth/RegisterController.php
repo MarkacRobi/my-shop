@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Adress;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\isGuestOrAdmin;
@@ -57,6 +58,10 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'role' => ['required', 'in:PRODAJALEC,STRANKA'],
+            'city' => [$data['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'string'],
+            'post_number' => [$data['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'numeric'],
+            'street' => [$data['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'string'],
+            'street_number' => [$data['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'numeric'],
         ]);
     }
 
@@ -68,7 +73,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
             'phone' => $data['phone'],
@@ -76,5 +81,23 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role' => $data['role'],
         ]);
+        if($data['role'] == 'STRANKA'){
+            $adress = new Adress();
+            $adress->city = $data['city'];
+            $adress->post_number = $data['post_number'];
+            $adress->street = $data['street'];
+            $adress->street_number = $data['street_number'];
+            $adress->user_id = $user->id;
+            $adress->save();
+
+//            $adress = Adress::create([
+//                'city' => $data['city'],
+//                'post_number' => $data['post_number'],
+//                'street' => $data['street'],
+//                'street_number' => $data['street_number'],
+//            ]);
+        }
+
+        return $user;
     }
 }

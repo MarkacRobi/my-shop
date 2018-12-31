@@ -33,7 +33,7 @@ class DashboardController extends Controller
             return view('dashboards.prodajalecDashboard');
         }
         else {
-            return view('dashboard')->with('posts', $user->posts);
+            return view('dashboards.postsdDashboard')->with('posts', $user->posts);
 //            return redirect('/users');
         }
     }

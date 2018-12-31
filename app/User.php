@@ -36,4 +36,9 @@ class User extends Authenticatable
     public function items() {
         return $this->hasMany('App\Item');
     }
+
+    //pomeni, da ima user relacijo z userjem in pripada enemu naslovu
+    public function adress(){
+        return $this->hasOne('App\Adress');
+    }
 }

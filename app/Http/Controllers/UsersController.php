@@ -159,6 +159,10 @@ class UsersController extends Controller
             'surname' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string'],
             'email' => ['required', 'string', 'email', 'max:255'],
+            'city' => [$request['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'string'],
+            'post_number' => [$request['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'numeric'],
+            'street' => [$request['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'string'],
+            'street_number' => [$request['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'numeric'],
         ]);
 
         //update User
@@ -170,6 +174,16 @@ class UsersController extends Controller
             $user->password = Hash::make($request->input('password'));
         }
         $user->save();
+
+        if($currentUser->role == 'STRANKA'){
+            $adress = $user->adress;
+            $adress->city = $request['city'];
+            $adress->post_number = $request['post_number'];
+            $adress->street = $request['street'];
+            $adress->street_number = $request['street_number'];
+            $adress->save();
+        }
+
         if($currentUser->role == 'ADMIN'){
             return redirect('/users') -> with('success', 'User '.$user->name.' Updated');
         }

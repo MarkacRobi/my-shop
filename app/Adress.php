@@ -4,16 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class Adress extends Model
 {
     // Table name
-    protected $table = 'items';
+    protected $table = 'adresses';
     //primary key
     protected $primaryKey = 'id';
 
-    public $timestamps = true;
-    //pomeni, da ima item relacijo z userjem in pripada enemu uporabniku
-    public function user(){
+    public $timestamps = false;
+
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
+
 }

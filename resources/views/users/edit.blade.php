@@ -88,7 +88,65 @@
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" >
                                 </div>
                             </div>
+                            @auth
+                                @if(Auth::user()->role == 'STRANKA')
+                                    {{--Naslov obvezen za stranko--}}
+                                    <div id="adress">
+                                        <div class="form-group row" id="City">
+                                            <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
 
+                                            <div class="col-md-6">
+                                                <input id="city" type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ $user->adress->city }}" required autofocus>
+
+                                                @if ($errors->has('city'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('city') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" id="Post number">
+                                            <label for="post_number" class="col-md-4 col-form-label text-md-right">{{ __('Post number') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="post_number" type="number" class="form-control{{ $errors->has('post_number') ? ' is-invalid' : '' }}" name="post_number" value="{{ $user->adress->post_number }}" required autofocus>
+
+                                                @if ($errors->has('post_number'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('post_number') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" id="Street">
+                                            <label for="street" class="col-md-4 col-form-label text-md-right">{{ __('Street') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="street" type="text" class="form-control{{ $errors->has('street') ? ' is-invalid' : '' }}" name="street" value="{{ $user->adress->street }}" required autofocus>
+
+                                                @if ($errors->has('street'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('street') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" id="Street number">
+                                            <label for="street_number" class="col-md-4 col-form-label text-md-right">{{ __('Street number') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="street_number" type="number" class="form-control{{ $errors->has('street_number') ? ' is-invalid' : '' }}" name="street_number" value="{{ $user->adress->street_number }}" required autofocus>
+
+                                                @if ($errors->has('street_number'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('street_number') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endauth
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     {{--"spoofing" spremeni POST v PUT!--}}

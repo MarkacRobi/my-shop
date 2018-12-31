@@ -6,7 +6,8 @@
     <div class="card">
         <div class="card-header">
             Invoice
-            <strong>01/01/01/2018</strong>
+            <strong>{{Carbon\Carbon::today()->format('Y-m-d')}}</strong>
+            {{--TODO: status--}}
             <span class="float-right"> <strong>Status:</strong> Pending</span>
 
         </div>
@@ -15,25 +16,26 @@
                 <div class="col-sm-6">
                     <h6 class="mb-3">From:</h6>
                     <div>
-                        <strong>Webz Poland</strong>
+                        <strong>my-shop</strong>
                     </div>
-                    <div>Madalinskiego 8</div>
-                    <div>71-101 Szczecin, Poland</div>
-                    <div>Email: info@webz.com.pl</div>
-                    <div>Phone: +48 444 666 3333</div>
+                    <div>Večna pot 113</div>
+                    <div>1000 Ljubljana, Slovenija</div>
+                    <div>Email: my-shop@gmail.com.</div>
+                    <div>Phone: +01 123 4567</div>
                 </div>
-
-                <div class="col-sm-6">
-                    <h6 class="mb-3">To:</h6>
-                    <div>
-                        <strong>Bob Mart</strong>
+                @auth
+                    <div class="col-sm-6">
+                        <h6 class="mb-3">To:</h6>
+                        <div>
+                            <strong>{{$user->name}} {{$user->surname}}</strong>
+                        </div>
+                        {{--TODO: naslov kraj postna drzava--}}
+                        <div>{{$user->adress->street}} {{$user->adress->street_number}}</div>
+                        <div>{{$user->adress->post_number}} {{$user->adress->city}}, Slovenija</div>
+                        <div>Email: {{$user->email}}</div>
+                        <div>Phone: {{$user->phone}}</div>
                     </div>
-                    <div>Attn: Daniel Marek</div>
-                    <div>43-190 Mikolow, Poland</div>
-                    <div>Email: marek@daniel.com</div>
-                    <div>Phone: +48 123 456 789</div>
-                </div>
-
+                @endauth
 
 
             </div>
@@ -52,42 +54,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="center">1</td>
-                        <td class="left strong">Origin License</td>
-                        <td class="left">Extended License</td>
+                    @foreach($items as $item)
+                        <tr>
+                            <td class="center">{{$loop->index}}</td>
+                            <td class="left strong">{{$item['item']['title']}}</td>
+                            <td class="left">{{$item['item']['body']}}</td>
 
-                        <td class="right">$999,00</td>
-                        <td class="center">1</td>
-                        <td class="right">$999,00</td>
-                    </tr>
-                    <tr>
-                        <td class="center">2</td>
-                        <td class="left">Custom Services</td>
-                        <td class="left">Instalation and Customization (cost per hour)</td>
-
-                        <td class="right">$150,00</td>
-                        <td class="center">20</td>
-                        <td class="right">$3.000,00</td>
-                    </tr>
-                    <tr>
-                        <td class="center">3</td>
-                        <td class="left">Hosting</td>
-                        <td class="left">1 year subcription</td>
-
-                        <td class="right">$499,00</td>
-                        <td class="center">1</td>
-                        <td class="right">$499,00</td>
-                    </tr>
-                    <tr>
-                        <td class="center">4</td>
-                        <td class="left">Platinum Support</td>
-                        <td class="left">1 year subcription 24/7</td>
-
-                        <td class="right">$3.999,00</td>
-                        <td class="center">1</td>
-                        <td class="right">$3.999,00</td>
-                    </tr>
+                            <td class="right">{{$item['item']['price']}}€</td>
+                            <td class="center">{{$item['quantity']}}</td>
+                            <td class="right">{{$item['price']}}€</td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -101,33 +78,14 @@
                         <tbody>
                         <tr>
                             <td class="left">
-                                <strong>Subtotal</strong>
-                            </td>
-                            <td class="right">$8.497,00</td>
-                        </tr>
-                        <tr>
-                            <td class="left">
-                                <strong>Discount (20%)</strong>
-                            </td>
-                            <td class="right">$1,699,40</td>
-                        </tr>
-                        <tr>
-                            <td class="left">
-                                <strong>VAT (10%)</strong>
-                            </td>
-                            <td class="right">$679,76</td>
-                        </tr>
-                        <tr>
-                            <td class="left">
                                 <strong>Total</strong>
                             </td>
                             <td class="right">
-                                <strong>$7.477,36</strong>
+                                <strong>{{$totalPrice}}€</strong>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
 
             </div>
