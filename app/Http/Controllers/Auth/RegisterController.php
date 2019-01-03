@@ -56,12 +56,12 @@ class RegisterController extends Controller
             'surname' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password' => ['required', 'string', 'min:3', 'confirmed'],
             'role' => ['required', 'in:PRODAJALEC,STRANKA'],
-            'city' => [$data['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'string'],
-            'post_number' => [$data['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'numeric'],
-            'street' => [$data['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'string'],
-            'street_number' => [$data['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'numeric'],
+            'city' => [$data['role'] != 'STRANKA' ? 'nullable' : 'required', 'string'],
+            'post_number' => [$data['role'] != 'STRANKA' ? 'nullable' : 'required', 'numeric'],
+            'street' => [$data['role'] != 'STRANKA' ? 'nullable' : 'required', 'string'],
+            'street_number' => [$data['role'] != 'STRANKA' ? 'nullable' : 'required', 'numeric'],
         ]);
     }
 
@@ -89,13 +89,6 @@ class RegisterController extends Controller
             $adress->street_number = $data['street_number'];
             $adress->user_id = $user->id;
             $adress->save();
-
-//            $adress = Adress::create([
-//                'city' => $data['city'],
-//                'post_number' => $data['post_number'],
-//                'street' => $data['street'],
-//                'street_number' => $data['street_number'],
-//            ]);
         }
 
         return $user;

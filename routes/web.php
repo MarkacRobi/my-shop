@@ -50,6 +50,8 @@ Route::resource('items', 'ItemsController');
 
 Route::resource('users', 'UsersController');
 
+Route::resource('orders', 'OrderController');
+
 Route::get('/dashboard', 'DashboardController@index');
 
 Route::get('/dashboard/posts', 'DashboardController@dashboard');

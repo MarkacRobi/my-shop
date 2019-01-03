@@ -51,7 +51,7 @@
                             <div class="form-group row">
                                 <label for="item_image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
                                 <div class="col-md-6">
-                                    <img id="item_image_show" class="mx-auto" width="50%" src="{{ asset('/storage/item_images/'.$item->item_image) }}">
+                                    <img id="item_image_show" class="mx-auto" width="50%" src="{{strpos($item->item_image, 'http') === 0 ? $item->item_image : asset('/storage/item_images/'.$item->item_image) }}">
                                     <input id="item_image"  type="file" onchange="readURL(this);" name="item_image" accept="image/gif, image/jpeg, image/png" value="{{ $item->item_image }}">
                                 </div>
                             </div>

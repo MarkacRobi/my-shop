@@ -6,7 +6,6 @@
     <div class="container mt-3">
         <h1>
             Prodajalci
-            {{--<a href="/users/create" class="btn btn-outline-primary float-right">Kreiraj novega</a>--}}
             <a href="{{route('users.create')}}" role="button" class="btn btn-success btn-lg">Kreiraj novega</a>
         </h1>
     </div>

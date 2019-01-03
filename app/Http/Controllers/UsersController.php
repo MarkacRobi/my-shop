@@ -159,10 +159,10 @@ class UsersController extends Controller
             'surname' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'city' => [$request['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'string'],
-            'post_number' => [$request['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'numeric'],
-            'street' => [$request['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'string'],
-            'street_number' => [$request['role'] == 'PRODAJALEC' ? 'nullable' : 'required', 'numeric'],
+            'city' => [$request['role'] != 'STRANKA' ? 'nullable' : 'required', 'string'],
+            'post_number' => [$request['role'] != 'STRANKA' ? 'nullable' : 'required', 'numeric'],
+            'street' => [$request['role'] != 'STRANKA' ? 'nullable' : 'required', 'string'],
+            'street_number' => [$request['role'] != 'STRANKA' ? 'nullable' : 'required', 'numeric'],
         ]);
 
         //update User

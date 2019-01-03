@@ -19,6 +19,7 @@ class CreateAdressesTable extends Migration
             $table->integer('post_number');
             $table->string('street');
             $table->integer('street_number');
+            $table->integer('user_id');
         });
     }
 

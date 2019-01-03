@@ -21,6 +21,7 @@ class CreateItemsTable extends Migration
             $table->double('rating')->default('0.0');
             $table->tinyInteger('active')->default('1');
             $table->integer('user_id');
+            $table->string('item_image');
             $table->timestamps();
         });
     }

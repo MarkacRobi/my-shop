@@ -26,6 +26,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/dashboard')}}">Dashboard</a>
                 </li>
+                @if (Auth::check() && Auth::user()->role == 'STRANKA')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('/orders')}}">Purchase history</a>
+                    </li>
+                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->

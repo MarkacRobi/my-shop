@@ -66,6 +66,23 @@ class CartController extends Controller
         }
         $cart = Session::get('cart');
         $user = auth()->user();
-        return view('shop.receipt')->with('items', $cart->items)->with('totalPrice', $cart->totalPrice)->with('user',$user);
+        $itemsArray = implode(",", array_keys($cart->items)); // seznam id artiklov locen z vejico
+        $itemsQuantity = '';
+        foreach ($cart->items as $key => $value) {
+            if (!next( $cart->items )){
+                $itemsQuantity = $itemsQuantity.$value['quantity'];
+            }
+            else {
+                $itemsQuantity = $itemsQuantity.$value['quantity'].',';
+            }
+        }
+
+        return view('shop.receipt')
+            ->with('items', $cart->items)
+            ->with('totalPrice', $cart->totalPrice)
+            ->with('user',$user)
+            ->with('itemsArray', $itemsArray)
+            ->with('quantities', $itemsQuantity);
+
     }
 }

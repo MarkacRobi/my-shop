@@ -5,11 +5,10 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            Invoice
-            <strong>{{Carbon\Carbon::today()->format('Y-m-d')}}</strong>
-            {{--TODO: status--}}
-            <span class="float-right"> <strong>Status:</strong> Pending</span>
-
+            <a href="{{ url()->previous() }}" class="btn btn-default">Go Back</a>
+            @if(isset($order))
+                <span class="float-right bg-gradient-warning"> <strong>Status:</strong> {{$order->status}}</span>
+            @endif
         </div>
         <div class="card-body">
             <div class="row mb-4">
@@ -86,6 +85,31 @@
                         </tr>
                         </tbody>
                     </table>
+                    @auth
+                        @if(Auth::user()->role == 'STRANKA' && !strpos(url()->previous(), 'orders'))
+                            <a href="" class="btn btn-outline-secondary">Cancel</a>
+                            <form method="POST" action="{{url('/orders')}}" class="d-inline-block">
+                                @csrf
+                                <input type="hidden" value="{{$itemsArray}}" name="itemsArray">
+                                <input type="hidden" value="{{$quantities}}" name="quantities">
+                                <input type="hidden" value="{{$totalPrice}}" name="totalPrice">
+                                <button type="submit" class="btn btn-outline-success">Confirm</button>
+                            </form>
+                        @elseif (Auth::user()->role == 'PRODAJALEC')
+                            <form method="POST" action="{{url('/orders/'.$order->id)}}" class="d-inline-block">
+                                @csrf
+                                <input type="hidden" value="PREKLICANO" name="status">
+                                {{Form::hidden('_method', 'PUT')}}
+                                <button type="submit" class="btn btn-outline-danger">Cancel Order</button>
+                            </form>
+                            <form method="POST" action="{{url('/orders/'.$order->id)}}" class="d-inline-block">
+                                @csrf
+                                <input type="hidden" value="POTRJENO" name="status">
+                                {{Form::hidden('_method', 'PUT')}}
+                                <button type="submit" class="btn btn-outline-success">Confirm Order</button>
+                            </form>
+                        @endif
+                    @endauth
                 </div>
 
             </div>

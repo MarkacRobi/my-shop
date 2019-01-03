@@ -1,11 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::user()->role == 'ADMIN')
-        <a href="{{ url()->previous() }}" class="btn btn-default">Go Back</a>
-    @else
-        <a href="{{ url()->previous() }}" class="btn btn-default">Go Back</a>
-    @endif
+    <a href="{{ url()->previous() }}" class="btn btn-default">Go Back</a>
 
     <h1>Profile</h1>
     <div>

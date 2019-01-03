@@ -3,14 +3,14 @@
 @section('content')
     <a href="{{ url()->previous() }}" class="btn btn-default">Go Back</a>
     <h1>{{$item->title}}</h1>
-    <img width="50%" src="{{ asset('/storage/item_images/'.$item->item_image) }}">
+    <img width="50%" src="{{strpos($item->item_image, 'http') === 0 ? $item->item_image : asset('/storage/item_images/'.$item->item_image) }}">
     <br><br>
     <div>
         <span class="font-weight-bold">Description</span>
         <p class="body">{{$item->body}}</p>
     </div>
     <hr>
-    <div class="font-weight-bold">Price: {{$item->price}}</div>
+    <div class="font-weight-bold">Price: {{$item->price}}€</div>
     <hr>
     @auth
         @if(Auth::user()->role == 'PRODAJALEC')
