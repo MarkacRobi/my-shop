@@ -27,17 +27,29 @@ class OrderController extends Controller
     {
         if(auth()->user()->role == 'STRANKA'){
             $orders = Order::where('user_id', auth()->user()->id)
-                ->orwhere('status', 'POTRJENO')
+                ->where('status', 'POTRJENO')
                 ->orwhere('status', 'PREKLICANO')
                 ->orwhere('status', 'STORNIRANO')
                 ->orderBy('created_at', 'desc')->paginate(12);
             return view('orders.index')->with('orders', $orders);
         }
         else {
-            $orders = Order::orderBy('created_at', 'desc')->paginate(12);
+            $orders = Order::where('status', 'ODDANO')->orderBy('created_at', 'desc')->paginate(12);
             return view('orders.index')->with('orders', $orders);
         }
     }
+
+    public function indexPotrjena(){
+
+        if(!auth()->user()->role == 'PRODAJALEC'){
+            redirect('/')->with('error', 'Unauthorized Page');
+        }
+
+        $orders = Order::where('status', 'POTRJENO')->orderBy('created_at', 'desc')->paginate(12);
+        return view('orders.index')->with('orders', $orders);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -126,10 +138,21 @@ class OrderController extends Controller
             'status' => ['required', 'in:POTRJENO,PREKLICANO,STORNIRANO']
         ]);
 
+
         $order = Order::find($id);
-        $order->status = $request->input('status');
-        $order->save();
-        return redirect('/orders')-> with('success', 'Narocilo '.$order->status);
+        //če želi stornirat, preveri ali je bilo potrjeno
+        if($request->input('status') == 'STORNIRANO' && $order->status != 'POTRJENO'){
+            return redirect()->back()->with('error', 'Cannot change status '.$order->status.' to STORNIRANO');
+        }
+        //preveri če je naročilo že stornirano, potem zavrni spremembe
+        else if($order->status == 'STORNIRANO'){
+            return redirect()->back()->with('error', 'Cannot modify status '.$order->status);
+        }
+        else {
+            $order->status = $request->input('status');
+            $order->save();
+            return redirect('/orders')-> with('success', 'Narocilo '.$order->status);
+        }
     }
 
     /**

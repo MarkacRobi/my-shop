@@ -3,26 +3,37 @@
 @section('content')
 @auth
 @if(in_array(Auth::user()->role, ['PRODAJALEC','STRANKA']) )
-    <div class="container mt-3">
-        <h1>
-            Narocila
-        </h1>
+    <div class="col-md-12">
+        <h4>Naročila</h4>
+        @if (count($orders) > 0)
+        <div class="table-responsive">
+            <table id="mytable" class="table table-bordred table-striped">
+                <thead>
+                    <th>Stranka</th>
+                    <th>Datum</th>
+                    <th>Skupna cena</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                @foreach($orders as $order)
+                        <tr>
+                            <a href="{{url('/orders/'.$order->id)}}">
+                                <td>{{$order->user->name.' '.$order->user->surname}}</td>
+                                <td>{{$order->created_at}}</td>
+                                <td>{{$order->total_price}}</td>
+                                <td>{{$order->status}}</td>
+                                <td><a href="{{url('/orders/'.$order->id)}}" class="btn btn-outline-secondary">Show</a></td>
+                            </a>
+                        </tr>
+                @endforeach
+                {{$orders->links()}}
+                </tbody>
+            </table>
+        </div>
+        @else
+            <p>No Orders found</p>
+        @endif
     </div>
-    @if (count($orders) > 0)
-        @foreach($orders as $order)
-            <div class="container">
-                <h3 class="list-group-item">
-                    <a href="{{url('/orders/'.$order->id)}}" class="text-muted">
-                       Stranka: {{$order->user->name.' '.$order->user->surname}} Datum: {{$order->created_at}} Status: {{$order->status}} Skupna cena: {{$order->total_price}}
-                    </a>
-
-                </h3>
-            </div>
-        @endforeach
-        {{$orders->links()}}
-    @else
-        <p>No Orders found</p>
-    @endif
 @endif
 @endauth
 @endsection

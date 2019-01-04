@@ -96,18 +96,27 @@
                                 <button type="submit" class="btn btn-outline-success">Confirm</button>
                             </form>
                         @elseif (Auth::user()->role == 'PRODAJALEC')
-                            <form method="POST" action="{{url('/orders/'.$order->id)}}" class="d-inline-block">
-                                @csrf
-                                <input type="hidden" value="PREKLICANO" name="status">
-                                {{Form::hidden('_method', 'PUT')}}
-                                <button type="submit" class="btn btn-outline-danger">Cancel Order</button>
-                            </form>
-                            <form method="POST" action="{{url('/orders/'.$order->id)}}" class="d-inline-block">
-                                @csrf
-                                <input type="hidden" value="POTRJENO" name="status">
-                                {{Form::hidden('_method', 'PUT')}}
-                                <button type="submit" class="btn btn-outline-success">Confirm Order</button>
-                            </form>
+                            @if ($order->status != 'POTRJENO')
+                                <form method="POST" action="{{url('/orders/'.$order->id)}}" class="d-inline-block">
+                                    @csrf
+                                    <input type="hidden" value="PREKLICANO" name="status">
+                                    {{Form::hidden('_method', 'PUT')}}
+                                    <button type="submit" class="btn btn-outline-danger">Cancel Order</button>
+                                </form>
+                                <form method="POST" action="{{url('/orders/'.$order->id)}}" class="d-inline-block">
+                                    @csrf
+                                    <input type="hidden" value="POTRJENO" name="status">
+                                    {{Form::hidden('_method', 'PUT')}}
+                                    <button type="submit" class="btn btn-outline-success">Confirm Order</button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{url('/orders/'.$order->id)}}" class="d-inline-block">
+                                    @csrf
+                                    <input type="hidden" value="STORNIRANO" name="status">
+                                    {{Form::hidden('_method', 'PUT')}}
+                                    <button type="submit" class="btn btn-outline-success">Storno</button>
+                                </form>
+                            @endif
                         @endif
                     @endauth
                 </div>
