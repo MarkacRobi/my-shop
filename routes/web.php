@@ -48,18 +48,22 @@ Route::resource('posts', 'PostsController');
 
 Route::resource('items', 'ItemsController');
 
-Route::resource('users', 'UsersController');
+Route::resource('users', 'UsersController')->middleware('verified');
 
 Route::get('orders/potrjena', 'OrderController@indexPotrjena');
 Route::resource('orders', 'OrderController');
 
 Route::get('/dashboard', 'DashboardController@index');
 
+
+
 Route::get('/dashboard/posts', 'DashboardController@dashboard');
 
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::group(['middleware' => 'forceSSL'], function(){
+Route::get('/authorize','Authorize');
+
+Route::group(['middleware' => 'forceSSL', 'verify' => true], function(){
 
     // Authentication Routes...
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

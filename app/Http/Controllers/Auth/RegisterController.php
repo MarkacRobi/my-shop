@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Rules\Captcha;
 
 class RegisterController extends Controller
 {
@@ -31,7 +32,14 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    public function redirectTo(){
+        if(auth()->user()->role != 'STRANKA'){
+            return '/authorize';
+        }
+        else {
+            return '/dashboard';
+        }
+    }
 
     /**
      * Create a new controller instance.
@@ -62,6 +70,7 @@ class RegisterController extends Controller
             'post_number' => [$data['role'] != 'STRANKA' ? 'nullable' : 'required', 'numeric'],
             'street' => [$data['role'] != 'STRANKA' ? 'nullable' : 'required', 'string'],
             'street_number' => [$data['role'] != 'STRANKA' ? 'nullable' : 'required', 'numeric'],
+            'g-recaptcha-response' => new Captcha(),
         ]);
     }
 

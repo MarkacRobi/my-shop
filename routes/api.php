@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Http\Resources\ItemsResource;
+use App\Item;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +14,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/items', function (Request $request) {
+    return collect(Item::orderBy('created_at', 'desc')->get());
+});
+Route::get('/items/{id}', function ($id) {
+    return collect(Item::find($id));
 });
