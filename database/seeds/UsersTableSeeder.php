@@ -26,16 +26,16 @@ class UsersTableSeeder extends Seeder
         User::create([
             'name' => 'robi',
             'surname' => 'markac',
-            'email' => 'robi.markac@gmail.com',
+            'email' => 'robi@gmail.com',
             'phone' => '031666666',
             'role' => 'PRODAJALEC',
             'password' => bcrypt('123456'),
         ]);
 
         User::create([
-            'name' => 'robi2',
-            'surname' => 'markac2',
-            'email' => 'robi2.markac2@gmail.com',
+            'name' => 'prodajalec',
+            'surname' => 'prodajalec',
+            'email' => 'prodajalec@gmail.com',
             'phone' => '031666665',
             'role' => 'PRODAJALEC',
             'password' => bcrypt('123456'),
@@ -45,7 +45,7 @@ class UsersTableSeeder extends Seeder
         $user1 = User::create([
             'name' => 'Pija',
             'surname' => 'Brglez',
-            'email' => 'pija.brglez@gmail.com',
+            'email' => 'pija@gmail.com',
             'phone' => '031666664',
             'role' => 'STRANKA',
             'password' => bcrypt('123456'),
@@ -60,9 +60,9 @@ class UsersTableSeeder extends Seeder
         $adress->save();
 
         $user2 = User::create([
-            'name' => 'Pija2',
-            'surname' => 'Brglez2',
-            'email' => 'pija2.brglez2@gmail.com',
+            'name' => 'stranka',
+            'surname' => 'stranka',
+            'email' => 'stranka@gmail.com',
             'phone' => '031666663',
             'role' => 'STRANKA',
             'password' => bcrypt('123456'),

@@ -36,10 +36,4 @@ class DashboardController extends Controller
             return redirect()->action('ItemsController@index');
         }
     }
-
-    public function dashboard(){
-        $user_id = auth()->user()->id;
-        $user = User::find($user_id);
-        return view('dashboards.postsdDashboard')->with('posts', $user->posts);
-    }
 }

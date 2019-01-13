@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Register') }}</div>
+                    <div class="card-header">{{ Auth::check() && Auth::user()->role == 'ADMIN' ? __('Create Prodajalec') : __('Create Stranka') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{url('/users')}}">
@@ -93,12 +93,76 @@
                                 <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('User type') }}</label>
 
                                 <div class="col-md-6">
-                                    @guest
-                                        <input id="role" type="radio" name="role" value="STRANKA"> Stranka<br>
-                                    @endguest
-                                    <input id="role" type="radio" name="role" value="PRODAJALEC" checked>Prodajalec<br>
+                                    @auth
+                                        @if (Auth::user()->role == 'PRODAJALEC')
+                                            <input id="role" type="radio" name="role" value="STRANKA" checked hidden> Stranka<br>
+
+                                        @else
+                                            <input id="role" type="radio" name="role" value="PRODAJALEC" checked hidden>Prodajalec<br>
+                                        @endif
+                                    @endauth
                                 </div>
                             </div>
+
+                            {{--Naslov obvezen za stranko--}}
+                            @auth
+                                @if(Auth::user()->role == 'PRODAJALEC')
+                                    <div id="adress" hidden>
+                                        <div class="form-group row" id="City">
+                                            <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="city" type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city"  autofocus>
+
+                                                @if ($errors->has('city'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('city') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" id="Post number">
+                                            <label for="post_number" class="col-md-4 col-form-label text-md-right">{{ __('Post number') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="post_number" type="number" class="form-control{{ $errors->has('post_number') ? ' is-invalid' : '' }}" name="post_number" autofocus>
+
+                                                @if ($errors->has('post_number'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('post_number') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" id="Street">
+                                            <label for="street" class="col-md-4 col-form-label text-md-right">{{ __('Street') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="street" type="text" class="form-control{{ $errors->has('street') ? ' is-invalid' : '' }}" name="street"  autofocus>
+
+                                                @if ($errors->has('street'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('street') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" id="Street number">
+                                            <label for="street_number" class="col-md-4 col-form-label text-md-right">{{ __('Street number') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="street_number" type="number" class="form-control{{ $errors->has('street_number') ? ' is-invalid' : '' }}" name="street_number"  autofocus>
+
+                                                @if ($errors->has('street_number'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('street_number') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endauth
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">

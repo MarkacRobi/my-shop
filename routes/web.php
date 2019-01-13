@@ -17,8 +17,6 @@ Route::get('/', 'ItemsController@index');
 
 Route::get('/about', 'PagesController@about');
 
-Route::get('/services', 'PagesController@services');
-
 //Shopping Cart
 Route::get('/add-to-cart/{id}', [
     'uses' => 'CartController@getAddToCart',
@@ -44,26 +42,12 @@ Route::get('/shopping-cart/receipt', [
 ]);
 //
 
-Route::resource('posts', 'PostsController');
-
-Route::resource('items', 'ItemsController');
-
-Route::resource('users', 'UsersController')->middleware('verified');
-
-Route::get('orders/potrjena', 'OrderController@indexPotrjena');
-Route::resource('orders', 'OrderController');
-
-Route::get('/dashboard', 'DashboardController@index');
-
-
-
-Route::get('/dashboard/posts', 'DashboardController@dashboard');
 
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/authorize','Authorize');
 
-Route::group(['middleware' => 'forceSSL', 'verify' => true], function(){
+Route::group(['middleware' => 'forceSSL','verify' => true], function(){
 
     // Authentication Routes...
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -84,4 +68,14 @@ Route::group(['middleware' => 'forceSSL', 'verify' => true], function(){
     Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
     Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
+    Route::post('items/{id}/rating', 'Rating')->middleware('auth');
+
+    Route::resource('items', 'ItemsController');
+
+    Route::resource('users', 'UsersController')->middleware('verified');
+
+    Route::get('orders/potrjena', 'OrderController@indexPotrjena');
+    Route::resource('orders', 'OrderController');
+
+    Route::get('/dashboard', 'DashboardController@index');
 });

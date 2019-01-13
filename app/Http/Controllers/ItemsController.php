@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\ProdajalecMiddleware;
+use App\Rating;
 use Illuminate\Http\Request;
 
 use App\Item;
@@ -88,6 +89,10 @@ class ItemsController extends Controller
         $item->user_id = auth()->user()->id;
         $item->item_image = $fileNameToStore;
         $item->save();
+
+        $rating = new Rating();
+        $rating->item_id = $item->id;
+        $rating->save();
         return redirect('/') -> with('success', 'Item Created');
     }
 

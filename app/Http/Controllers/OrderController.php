@@ -28,7 +28,7 @@ class OrderController extends Controller
         if(auth()->user()->role == 'STRANKA'){
             $orders = Order::where('user_id', auth()->user()->id)
                 ->where('status', 'POTRJENO')
-                ->orwhere('status', 'PREKLICANO')
+                ->orwhere('status', 'ODDANO')
                 ->orwhere('status', 'STORNIRANO')
                 ->orderBy('created_at', 'desc')->paginate(12);
             return view('orders.index')->with('orders', $orders);

@@ -18,7 +18,6 @@ class CreateItemsTable extends Migration
             $table->string('title');
             $table->mediumText('body');
             $table->double('price');
-            $table->double('rating')->default('0.0');
             $table->tinyInteger('active')->default('1');
             $table->integer('user_id');
             $table->string('item_image');

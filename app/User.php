@@ -27,10 +27,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password', 'remember_token',
     ];
-    //relacija, ki pomeni da ima user vec post-ov
-    public function posts() {
-        return $this->hasMany('App\Post');
-    }
 
     //relacija, ki pomeni da ima user vec artiklov/item-ov
     public function items() {

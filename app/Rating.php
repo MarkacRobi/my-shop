@@ -4,20 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class Rating extends Model
 {
     // Table name
-    protected $table = 'items';
+    protected $table = 'ratings';
     //primary key
     protected $primaryKey = 'id';
 
     public $timestamps = true;
     //pomeni, da ima item relacijo z userjem in pripada enemu uporabniku
-    public function user(){
-        return $this->belongsTo('App\User');
-    }
-    //ima relacijo z ratingom ena
-    public function rating(){
-        return $this->hasOne('App\Rating');
+    public function item(){
+        return $this->belongsTo('App\Item');
     }
 }

@@ -37,7 +37,7 @@
                             </div>
                             <ul class="rating mt-0 mb-2">
                                 @for ($i = 0; $i < 5; $i++)
-                                    @if ($item->rating > $i)
+                                    @if ($item->rating->rating > $i)
                                         <li class="fa fa-star"></li>
                                     @else
                                         <li class="fa fa-star disable"></li>

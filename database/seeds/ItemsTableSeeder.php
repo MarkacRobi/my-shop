@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Item;
+use App\Rating;
 
 
 class ItemsTableSeeder extends Seeder
@@ -13,34 +14,48 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
-
-        Item::create([
+        $item = Item::create([
             'title' => 'Women\'s Blouse',
             'body' => 'Best Blouse ever!',
             'price' => '16.00',
             'user_id' => '2',
-            'item_image' => 'http://bestjquery.com/tutorial/product-grid/demo9/images/img-1.jpg',
+            'item_image' => '1.jpg',
         ]);
-        Item::create([
+        $rating = new Rating();
+        $rating->item_id = $item->id;
+        $rating->save();
+
+        $item = Item::create([
             'title' => 'Men\'s Plain Tshirt',
             'body' => 'Best Tshirt ever!',
             'price' => '5.00',
             'user_id' => '2',
-            'item_image' => 'http://bestjquery.com/tutorial/product-grid/demo9/images/img-3.jpg',
+            'item_image' => '2.jpg',
         ]);
-        Item::create([
+        $rating = new Rating();
+        $rating->item_id = $item->id;
+        $rating->save();
+
+        $item = Item::create([
             'title' => 'Men\'s Plain Tshirt',
             'body' => 'Best Tshirt ever!',
             'price' => '10.00',
             'user_id' => '2',
-            'item_image' => 'http://bestjquery.com/tutorial/product-grid/demo9/images/img-5.jpg',
+            'item_image' => '3.jpg',
         ]);
-        Item::create([
+        $rating = new Rating();
+        $rating->item_id = $item->id;
+        $rating->save();
+
+        $item = Item::create([
             'title' => 'Men\'s Plain Tshirt',
             'body' => 'Best Tshirt ever!',
             'price' => '12.00',
             'user_id' => '2',
-            'item_image' => 'http://bestjquery.com/tutorial/product-grid/demo9/images/img-7.jpg',
+            'item_image' => '4.jpg',
         ]);
+        $rating = new Rating();
+        $rating->item_id = $item->id;
+        $rating->save();
     }
 }

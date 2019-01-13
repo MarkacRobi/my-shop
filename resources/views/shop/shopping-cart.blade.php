@@ -14,7 +14,7 @@
                     <!-- PRODUCTS -->
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-2 text-center">
-                            <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew" width="120" height="80">
+                            <img class="img-responsive" src="{{strpos($item['item']->item_image, 'http') === 0 ? $item['item']->item_image : asset('/storage/item_images/'.$item['item']->item_image) }}" alt="prewiew" width="120" height="80">
                         </div>
                         <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6 pt-4">
                             <h4 class="product-name"><strong>{{$item['item']['title']}}</strong></h4>
@@ -29,7 +29,7 @@
                                         <input type="button" value="+" class="plus">
                                     </a>
                                     <input type="text" value="{{$item['quantity']}}" title="Qty" class="qty"
-                                           size="4">
+                                           size="4" onkeydown="return false">
                                     <a href="{{ url('/remove-from-cart/'.$item['item']->id) }}">
                                         <input type="button" value="-" class="minus">
                                     </a>
@@ -46,24 +46,9 @@
                     </div>
                     <hr>
                 @endforeach
-                <!-- END PRODUCT -->
-                <div class="float-right">
-                    <a href="" class="btn btn-outline-secondary float-right">
-                        Update shopping cart
-                    </a>
-                </div>
+
             </div>
             <div class="card-footer">
-                <div class="coupon col-md-5 col-sm-5 no-padding-left float-left">
-                    <div class="row">
-                        <div class="col-6">
-                            <input type="text" class="form-control" placeholder="cupone code">
-                        </div>
-                        <div class="col-6">
-                            <input type="submit" class="btn btn-default" value="Use cupone">
-                        </div>
-                    </div>
-                </div>
                 <div class="float-right" style="margin: 10px">
                     <a href="{{route('item.shoppingCart.receipt')}}" class="btn btn-success float-right">Checkout</a>
                     <div class="float-right" style="margin: 5px">

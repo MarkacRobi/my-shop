@@ -18,12 +18,6 @@
                     <a class="nav-link" href="{{url('/about')}}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/services')}}">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/posts')}}">Blog</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{url('/dashboard')}}">Dashboard</a>
                 </li>
                 @if (Auth::check() && Auth::user()->role == 'STRANKA')
@@ -61,7 +55,6 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{url('/dashboard')}}">Dashboard</a>
-                            <a class="dropdown-item" href="{{ url('/dashboard/posts') }}">Posts</a>
                             <a class="dropdown-item" href="{{ route('users.show', Auth::user()->id) }}">Profile</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
